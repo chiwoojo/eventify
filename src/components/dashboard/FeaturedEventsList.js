@@ -1,5 +1,5 @@
 /**
- *    
+ *
  *    Joined Events Component.
  *
  */
@@ -45,7 +45,7 @@ export default class FeaturedEventsList extends Component {
 
 
         <ReactCSSTransitionGroup transitionName='dash-feat-cards' transitionEnterTimeout={500} transitionLeaveTimeout={300}>
-          {this.props.data.sort((a, b) => {
+          {this.props.data.sort( (a, b) => {
             const bdist = Helpers.distance(b.event_lat, b.event_long, this.props.user.loc.lat, this.props.user.loc.long);
             const adist =  Helpers.distance(a.event_lat, a.event_long, this.props.user.loc.lat, this.props.user.loc.long);
             if (adist > bdist) {
@@ -55,7 +55,7 @@ export default class FeaturedEventsList extends Component {
               return -1;
             }
             return 0;
-          })
+          } )
             //calculate distance of each event
             .filter((event) => {
               let dist = Helpers.distance(event.event_lat, event.event_long, this.props.user.loc.lat, this.props.user.loc.long);
@@ -73,4 +73,3 @@ export default class FeaturedEventsList extends Component {
   }
 
 }
-
