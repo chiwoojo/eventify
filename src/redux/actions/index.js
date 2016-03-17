@@ -27,6 +27,7 @@ export const UPDATE_LOCATION = 'UPDATE_LOCATION';
 export const UPDATE_EVENT_LOCATION = 'UPDATE_EVENT_LOCATION';
 export const GET_PROFILE_PIC = 'GET_PROFILE_PIC';
 export const UPDATE_RADIUS = 'UPDATE_RADIUS';
+export const REQUEST_CREATE_EVENT = 'REQUEST_CREATE_EVENT';
 
 /**
  *    Fetches all events from the backend
@@ -112,6 +113,12 @@ export function uploadImage(file) {
   };
 }
 
+/**
+ *  Creates an event
+ *
+ *  @param  {obj} data obj with properties to post data with
+ *  @return {obj}      Object that will be used with the reducers
+ */
 export function createEvent(data) {
   const request = axios.post('api/events', data);
   return {
@@ -121,7 +128,18 @@ export function createEvent(data) {
 }
 
 /**
+ *  Invokes when a request to create a new event has been fired.
+ *  Mainly to display spinner.
  *
+ *  @return {obj}
+ */
+export function reqCreateEvent() {
+  return {
+    type: REQUEST_CREATE_EVENT
+  }
+}
+
+/**
  *    Fetches all events joined by User by his/her User ID
  *
  *    @param [Number] which is the unique ID of the User
