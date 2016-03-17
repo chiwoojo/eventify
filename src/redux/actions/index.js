@@ -4,9 +4,6 @@
  *
  */
 
-//mike@michaelfulton.co
-//timcmiller@live.com
-
 import axios from 'axios';
 
 export const UNJOIN_EVENT = 'UNJOIN_EVENT';
@@ -163,6 +160,7 @@ export function updateRadius(milesRadius) {
     payload: milesRadius
   };
 }
+
 /**
  *
  *    Fetches all users who joined a specific event, by event Id
@@ -171,7 +169,6 @@ export function updateRadius(milesRadius) {
  *    @returns [Object] reducer Action
  *
  */
-
 export function fetchJoinedUsers(eventId) {
   const request = axios.get(`api/events/${eventId}/users`);
   return {

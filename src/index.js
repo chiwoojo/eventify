@@ -12,12 +12,14 @@ import { Router, hashHistory } from 'react-router';
 import injectTapEventPlugin from 'react-tap-event-plugin';
 import promise from 'redux-promise';
 import createLogger from 'redux-logger';
+import thunkMiddleware from 'redux-thunk';
 
 import routes from './config/routes';
 import reducers from './redux/reducers';
 
 const logger = createLogger();
 const createStoreWithMiddleware = applyMiddleware(
+  thunkMiddleware,
   promise,
   logger
 )(createStore);
