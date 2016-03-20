@@ -1,21 +1,24 @@
 {
-    "plugins": [
-      "react"
-    ],
-    "extends": ["eslint:recommended", "plugin:react/recommended"],
-    "parserOptions": {
-      "ecmaFeatures": {
-        "ecmaVersion": 6,
-        "jsx": true,
-        "experimentalObjectRestSpread": true,
-        "sourceType": "module",
-        "destructuring": true
-      }
-    },
-    "parser": "babel-eslint",
-    "env": {
-        "es6": true,
-        "browser": true,
-        "node": true
+  "plugins": [
+    "react"
+  ],
+  "extends": ["eslint:recommended", "airbnb"],
+  "rules": {
+    "no-trailing-spaces": 0,
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "ecmaVersion": 6,
+      "jsx": true,
+      "experimentalObjectRestSpread": true,
+      "sourceType": "module",
+      "destructuring": true
     }
+  },
+  "parser": "babel-eslint",
+  "env": {
+    "es6": true,
+    "browser": true,
+    "node": true
+  }
 }
