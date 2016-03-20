@@ -44,7 +44,6 @@ const nameStyle = {
   },
 };
 
-
 const HowItWorks = function HowItWorks() {
   return (
     <div className="row">
