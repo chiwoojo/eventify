@@ -1,39 +1,48 @@
-import React, { Component, PropTypes } from 'react';
-import FlatButton from 'material-ui/lib/flat-button';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { auth } from '../../redux/actions/index';
+/**
+ * "Log in with Facebook" button
+ * when you click on Sign-up or Sign-in
+ *
+ * TODO: Make the "Log in with Facebook" button mobile friendly
+ */
 
+// React
+import React, { Component, PropTypes } from 'react';
+
+// Radium
+import Radium from 'radium';
+
+// Components
+import FlatButton from 'material-ui/lib/flat-button';
 
 const style = {
-  display: 'block',
-  margin: '0px auto 15px',
-  backgroundColor: '#53b3cb',
-  fontSize: '1.4em',
-  padding: '10px',
-  color: '#fff'
+  base: {
+    color: 'white',
+    fontSize: '2.5vw',
+    display: 'block',
+    margin: '0px auto 15px',
+    padding: '10px',
+    backgroundColor: '#53b3cb',
+  },
 };
 
+@Radium
 class SignupBtn extends Component {
-
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   };
 
   render() {
     return (
-      <FlatButton
-        label="Log In With Facebook"
-        style={style}
-        linkButton={true}
-        href="api/auth/facebook"
-      />
+      <div style={style.mediaQ}>
+        <FlatButton
+          label="Log In With Facebook"
+          style={style.base}
+          linkButton
+          href="api/auth/facebook"
+        />
+      </div>
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ auth }, dispatch);
-}
-
-export default connect(null, { auth })(SignupBtn);
+export default SignupBtn;
