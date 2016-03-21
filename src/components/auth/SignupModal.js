@@ -23,7 +23,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 //Components
 import LoginFBBtn from './LoginFBBtn';
 
-
 const contentStyle = {
   width: '50%',
   maxWidth: '450px',

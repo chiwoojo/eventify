@@ -13,7 +13,10 @@ const style = {
   backgroundColor: '#53b3cb',
   fontSize: '1.4em',
   padding: '10px',
-  color: '#fff'
+  color: '#fff',
+  '@media (max-width: 600px)' : {
+    fontSize: '0.1em'
+  }
 };
 
 class SigninBtn extends React.Component {

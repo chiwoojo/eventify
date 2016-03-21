@@ -1,17 +1,17 @@
 /**
- *
- *    Top - Level for Landing Page
- *
- *    Contains Navigation Bar, Banner, Search Box, and Featured Events, About the Team page
- *
+ * Top-level for Landing Page
+ * Contains Navigation Bar, Banner, Search Box, and Featured Events, About the Team page
+ * TODO: Refactor by integrating Redux
  */
 import React from 'react';
+
+import Radium from 'radium';
 
 //Import Components
 import EventList from './FeatEvents';
 import BannerImage from './BannerImage';
 import GoogleMapsSearchBar from '../searchbar/GoogleMapsSearchBar';
-import AboutUs from '../about-us/AboutUs';
+import AboutUs from '../AboutUs/index';
 
 //Redux Connectors
 import { connect } from 'react-redux';
@@ -22,6 +22,20 @@ import { updateUserLocation, fetchCreatedEvents, fetchJoinedEvents, fetchEvents,
 //Helpers for HTTP requests
 import Helpers from '../../helpers/helpers';
 
+const style = {
+  backgroundColor: '#fff',
+  paddingBottom: '50px',
+  test: {
+    ':hover': {
+      backgroundColor: 'red'
+    },
+    '@media (min-width: 400px)': {
+      backgroundColor: 'green'
+    },
+  }
+}
+
+@Radium
 class Landing extends React.Component {
 
   //Set initial State for this Component
@@ -243,5 +257,7 @@ function mapStateToProps(state) {
     user: state.user
   };
 }
+
+// Landing = Radium(Landing);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

@@ -15,6 +15,9 @@
 
 import React from 'react';
 
+//Radium
+import Radium from 'radium';
+
 //Material UI
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
@@ -25,17 +28,20 @@ import LoginFBBtn from './LoginFBBtn';
 
 
 const contentStyle = {
-  width: '50%',
-  maxWidth: '450px',
-  textAlign: 'center'
-
+  base: {
+    width: '100%',
+    maxWidth: '450px',
+    textAlign: 'center'
+  }
 };
 
 const titleStyle = {
-  textAlign: 'center',
-  fontFamily: 'Open Sans',
-  fontWeight: 'bold',
-  color: '#db436c'
+  base: {
+    textAlign: 'center',
+    fontFamily: 'Open Sans',
+    fontWeight: 'bold',
+    color: '#db436c'
+  }
 };
 
 class SigninModal extends React.Component {
@@ -73,8 +79,8 @@ class SigninModal extends React.Component {
               title = "Eventify"
               modal = {false}
               open = {this.state.open}
-              contentStyle = {contentStyle}
-              titleStyle = {titleStyle}
+              contentStyle = {contentStyle.base}
+              titleStyle = {titleStyle.base}
               onRequestClose={() => this.handleClose()}>
               <LoginFBBtn />
               {/* keep this code here for future local authentication implementation
@@ -111,4 +117,4 @@ class SigninModal extends React.Component {
   }
 }
 
-export default SigninModal;
+export default Radium(SigninModal);

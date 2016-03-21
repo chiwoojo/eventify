@@ -2,7 +2,7 @@
  * "Log in with Facebook" button
  * when you click on Sign-up or Sign-in
  *
- * TODO: Make the "Log in with Facebook" button mobile friendly
+ * TODO: Make the "Log in with Facebook" button mobile friendly (font)
  */
 
 // React

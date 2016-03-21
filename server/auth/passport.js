@@ -104,7 +104,7 @@ module.exports = function(passport) {
   if (isDevelopment) {
     var configAuth = require ('../config/authConfig');
     passport.use(new FacebookStrategy({
-      // pull in our app id and secret from our authConfig.js file
+      // pull in our App id and secret from our authConfig.js file
       clientID        : configAuth.facebookAuth.clientID,
       clientSecret    : configAuth.facebookAuth.clientSecret,
       callbackURL     : configAuth.facebookAuth.callbackURL,
@@ -147,7 +147,7 @@ module.exports = function(passport) {
       }));
   } else {
     passport.use(new FacebookStrategy({
-      // pull in our app id and secret from our authConfig.js file
+      // pull in our App id and secret from our authConfig.js file
       clientID        : process.env.FACEBOOK_APP_ID,
       clientSecret    : process.env.FACEBOOK_SECRET,
       callbackURL     : 'https://event-ify.herokuapp.com/api/auth/facebook/callback'

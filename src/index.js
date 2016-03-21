@@ -30,7 +30,8 @@ injectTapEventPlugin();
 // render the DOM based on the routes.js file replacing the DIV element with 'id' in the index.html
 ReactDOM.render(
   <Provider store={ createStoreWithMiddleware(reducers) }>
-    <Router history={ hashHistory } routes={routes}></Router>
+    <Router history={ hashHistory } routes={routes} />
   </Provider>
-  ,document.getElementById('app')
+  ,
+  document.getElementById('app')
 );

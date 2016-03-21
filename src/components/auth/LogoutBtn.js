@@ -1,21 +1,24 @@
 /**
- *    
+ *
  *    Logout Button
- *    
+ *
  *    Optional :
- *    
- *    @props {Boolean} this.props.menuItem 
+ *
+ *    @props {Boolean} this.props.menuItem
  *    if the sign-up button is part of LeftNav,
  *    return a MenuItem instead of FlatButton.
- *    
+ *
  */
 
+// React
 import React, { Component, PropTypes } from 'react';
+
+// Redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { logout } from '../../redux/actions/index';
 
-//Material UI
+// Material UI Components
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import FlatButton from 'material-ui/lib/flat-button';
 
@@ -30,26 +33,26 @@ class LogoutBtn extends Component {
         this.context.router.push('/');
       });
   }
-  
+
   handleClickMenuBtn() {
-    this.props.closeLeftNav(); 
+    this.props.closeLeftNav();
     this.handleLogout();
   }
-  
+
   handleClickFlatBtn() {
     this.handleLogout();
   }
 
   render() {
-    
+
     if (this.props.menuItem) {
       return (
-        <MenuItem onTouchTap={() => this.handleClickMenuBtn()} style={{color: '#53b3cb'}}> 
+        <MenuItem onTouchTap={() => this.handleClickMenuBtn()} style={{color: '#53b3cb'}}>
           Log Out
         </MenuItem>
       );
     }
-    
+
     return (
       <FlatButton
         label="Log Out"

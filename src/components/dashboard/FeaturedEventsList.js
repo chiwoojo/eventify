@@ -4,12 +4,13 @@
  *
  */
 
+// React
 import React, { Component, PropTypes } from 'react';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //Components
 import Slider from 'material-ui/lib/slider';
-import MaterialUICard from '../landing-page/EventCard';
+import MaterialUICard from '../BigCard/EventCard';
 
 import Helpers from '../../helpers/helpers';
 

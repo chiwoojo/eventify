@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchOneEvent } from '../../redux/actions/';
 
-import Card from './EventCard';
+import Card from './../BigCard/EventCard';
 
 import Helpers from '../../helpers/helpers';
 

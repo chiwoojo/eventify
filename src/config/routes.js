@@ -5,7 +5,7 @@
  */
 import React from 'react';
 import { Route, IndexRoute } from 'react-router';
-import App from '../components/app/';
+import App from '../components/App/index';
 import Landing from '../components/landing-page/';
 import Dashboard from '../components/dashboard/';
 import CreateEvent from '../components/create-event/';
