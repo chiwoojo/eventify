@@ -7,7 +7,7 @@
 import React from 'react';
 
 // Tech Stack Data
-import { TechStackInfo } from './TechStackData';
+import { TechStackInfo } from './TechStackInfo';
 
 const teamStyle = {
   base: {
