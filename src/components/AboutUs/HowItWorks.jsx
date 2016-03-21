@@ -1,3 +1,9 @@
+/**
+ * How it works section of the landing-page
+ *
+ * TODO: refactor the repeating DIVs like TechStackInfo
+ */
+
 // React
 import React from 'react';
 

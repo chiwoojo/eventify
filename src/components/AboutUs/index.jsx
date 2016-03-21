@@ -1,3 +1,8 @@
+/**
+ * Top-level component for About-Us page under event
+ * in the landing page
+ */
+
 // React
 import React from 'react';
 
