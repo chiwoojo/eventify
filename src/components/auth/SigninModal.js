@@ -1,38 +1,39 @@
 /**
+ *    Sign-in Modal (pop out when you click on 'signin')
  *
- *    Sign-in Modal
- *
- *    Optional :
- *
+ *    --Optional--
  *    @props {Boolean} this.props.menuItem
  *    if the sign-up button is part of LeftNav,
  *    return a MenuItem instead of FlatButton.
- *
  *    @props {Function} this.props.closeLeftNav
  *    close the LeftNav, parent component
  *
+ *    TODO: handle closing of opening/closing of the modal through Redux
+ *    TODO: The 'setting JSX closing tags to variable formula' simply won't work.
+ *    TODO: Thus, refactor into a new component or go back to IF/ELSE the whole thing,
+ *    TODO: with only the DIALOG as a variable to keep it DRY
  */
 
+// React
 import React from 'react';
 
-//Radium
+// Radium
 import Radium from 'radium';
 
-//Material UI
+// Material UI Components
 import Dialog from 'material-ui/lib/dialog';
 import FlatButton from 'material-ui/lib/flat-button';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
-//Components
+// Components
 import LoginFBBtn from './LoginFBBtn';
-
 
 const contentStyle = {
   base: {
     width: '100%',
     maxWidth: '450px',
-    textAlign: 'center'
-  }
+    textAlign: 'center',
+  },
 };
 
 const titleStyle = {
@@ -40,81 +41,94 @@ const titleStyle = {
     textAlign: 'center',
     fontFamily: 'Open Sans',
     fontWeight: 'bold',
-    color: '#db436c'
-  }
+    color: '#db436c',
+  },
 };
 
-class SigninModal extends React.Component {
+const eventifyColor = {
+  base: {
+    color: '#53b3cb',
+  },
+};
 
+@Radium
+class SigninModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      open: false,
     };
+    this.handleClose = this.handleClose.bind(this);
+    this.handleOpen = this.handleOpen.bind(this);
   }
 
+  /**
+   * Opens the modal
+   */
   handleOpen() {
-    this.setState({open: true});
+    this.setState({ open: true });
   }
 
+  /**
+   * Closes the modal
+   */
   handleClose() {
-    if (this.props.menuItem) {
-      this.props.closeLeftNav();
+    const { menuItem, closeLeftNav } = this.props;
+
+    // if this component renders a
+    // menuItem inside of the leftNav
+    // close the left nav when clicked out
+    if (menuItem) {
+      closeLeftNav();
     }
-    this.setState({open: false});
+    this.setState({ open: false });
   }
 
   render() {
-
-    if (this.props.menuItem) {
-      return (
-        <div>
-
-          <MenuItem
-            onTouchTap = {() => this.handleOpen()}
-            style={{color: '#53b3cb'}}
-          >
-            Sign In
-            <Dialog
-              title = "Eventify"
-              modal = {false}
-              open = {this.state.open}
-              contentStyle = {contentStyle.base}
-              titleStyle = {titleStyle.base}
-              onRequestClose={() => this.handleClose()}>
-              <LoginFBBtn />
-              {/* keep this code here for future local authentication implementation
-              OR
-              <SigninForm />*/}
-            </Dialog>
-          </MenuItem>
-
-        </div>
-
-      );
-    }
-
-    return (
-      <div>
-        <FlatButton
-          label = "Log In"
-          onClick = {() => this.handleOpen()}
-          style = {{color: '#53b3cb'}} />
+    const { menuItem } = this.props;
+    const dialogEl = (
         <Dialog
           title = "Eventify"
           modal = {false}
           open = {this.state.open}
-          contentStyle = {contentStyle}
-          titleStyle = {titleStyle}
-          onRequestClose={() => this.handleClose()}>
+          contentStyle = {contentStyle.base}
+          titleStyle = {titleStyle.base}
+          onRequestClose={this.handleClose}
+        >
           <LoginFBBtn />
-          {/* keep this code here for future local authentication implementation
-          OR
-          <SigninForm />*/}
         </Dialog>
+    );
+
+    if (menuItem) {
+      return (
+        <div>
+          <MenuItem
+            onTouchTap = {this.handleOpen}
+            style = {eventifyColor.base}
+          >
+            <span> Sign In </span>
+            {dialogEl}
+          </MenuItem>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <FlatButton
+          label = "Log In"
+          onClick = {this.handleOpen}
+          style = {eventifyColor.base}
+        />
+          <span> Sign In </span>
+          {dialogEl}
       </div>
     );
   }
 }
 
-export default Radium(SigninModal);
+SigninModal.propTypes = {
+  menuItem: React.PropTypes.bool,
+  closeLeftNav: React.PropTypes.func,
+};
+
+export default SigninModal;
