@@ -2,52 +2,69 @@
  *
  *    Logout Button
  *
- *    Optional :
+ *    --Required--
+ *    @props {Func} logout
+ *    Dispatches logout action to Redux
  *
- *    @props {Boolean} this.props.menuItem
+ *    --Situational / Optional--
+ *    @props {Boolean} menuItem
  *    if the sign-up button is part of LeftNav,
  *    return a MenuItem instead of FlatButton.
  *
+ *    @props {Func} closeLeftNav
+ *    closes the leftNav when it is open
  */
 
 // React
 import React, { Component, PropTypes } from 'react';
 
-// Redux
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
-import { logout } from '../../redux/actions/index';
-
 // Material UI Components
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import FlatButton from 'material-ui/lib/flat-button';
 
+const menuItemStyle = {
+  color: '#53b3cb',
+};
+
 class LogoutBtn extends Component {
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   };
 
+  constructor() {
+    super();
+    this.handleLogout = this.handleLogout.bind(this);
+    this.handleClickMenuBtn = this.handleClickMenuBtn.bind(this);
+  }
+
+  /**
+   * Logs out the user by
+   * 1) changing the Redux state
+   * 2) pushing the user to the main page
+   */
   handleLogout() {
-    this.props.logout()
+    const { logout } = this.props;
+    logout()
       .then(() => {
         this.context.router.push('/');
       });
   }
 
+  /**
+   * Closes the leftnav when clicked,
+   * and also logs out the user.
+   *
+   * Only relevant when the leftNav is open.
+   */
   handleClickMenuBtn() {
     this.props.closeLeftNav();
     this.handleLogout();
   }
 
-  handleClickFlatBtn() {
-    this.handleLogout();
-  }
-
   render() {
-
     if (this.props.menuItem) {
       return (
-        <MenuItem onTouchTap={() => this.handleClickMenuBtn()} style={{color: '#53b3cb'}}>
+        <MenuItem onTouchTap={this.handleClickMenuBtn} style={menuItemStyle}>
           Log Out
         </MenuItem>
       );
@@ -56,15 +73,17 @@ class LogoutBtn extends Component {
     return (
       <FlatButton
         label="Log Out"
-        style={{color: '#53b3cb'}}
-        onClick={() => this.handleClickFlatBtn()}
+        style={menuItemStyle}
+        onClick={this.handleClickFlatBtn}
       />
     );
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ logout }, dispatch);
-}
+LogoutBtn.propTypes = {
+  logout: React.PropTypes.func.isRequired,
+  closeLeftNav: React.PropTypes.func,
+  menuItem: React.PropTypes.bool,
+};
 
-export default connect(null, { logout })(LogoutBtn);
+export default LogoutBtn;
