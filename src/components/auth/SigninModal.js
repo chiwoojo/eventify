@@ -106,7 +106,6 @@ class SigninModal extends React.Component {
             onTouchTap = {this.handleOpen}
             style = {eventifyColor.base}
           >
-            <span> Sign In </span>
             {dialogEl}
           </MenuItem>
         </div>
@@ -119,7 +118,6 @@ class SigninModal extends React.Component {
           onClick = {this.handleOpen}
           style = {eventifyColor.base}
         />
-          <span> Sign In </span>
           {dialogEl}
       </div>
     );

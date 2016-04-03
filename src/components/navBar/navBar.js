@@ -21,7 +21,6 @@ import MenuItem from 'material-ui/lib/menus/menu-item';
 import LogoutBtn from '../auth/LogoutBtn';
 
 class NavBar extends Component {
-
   static contextTypes = {
     router: PropTypes.object,
   };
@@ -50,58 +49,77 @@ class NavBar extends Component {
     if (this.props.isLoggedIn === true) {
       return (
         <div className='navbar-fixed'>
-          <nav  role="navigation">
+          <nav role="navigation">
             <div className="nav-wrapper">
               <Link to="/" className="brand-logo">Eventify</Link>
-
                 <ul id="nav-mobile">
 
+                  {/*
+                    menu items for when the screen
+                    resolution is large
+                   */}
                   <div className='right'>
-
                     <li className='hide-on-med-and-down'>
                       <CreateEventBtn closeLeftNav={this.handleToggle} />
                     </li>
-
                     <li className='hide-on-med-and-down'>
                       <FlatButton
-                           label = "Dashboard"
-                           style = {{color: '#53b3cb'}}
-                           onClick = {this.goToDash.bind(this)}/>
+                        label = "Dashboard"
+                        style = {{color: '#53b3cb'}}
+                        onClick = {this.goToDash.bind(this)}
+                      />
                     </li>
-
                     <li className='hide-on-med-and-down'>
                       <LogoutBtn logout={this.props.logout} />
                     </li>
-
                   </div>
 
+                  {/*
+                    Hamburger menu icon. Shows only
+                    when screen is small
+                   */}
                   <li className='right hide-on-large-only'>
-                    <a onClick={() => this.handleToggle()}><i className="material-icons">menu</i></a>
+                    <a onClick={() => this.handleToggle()}>
+                      <i className="material-icons">
+                        menu
+                      </i>
+                    </a>
                   </li>
-
                 </ul>
-
             </div>
           </nav>
+
+          {/*
+            navigation slide out for when the screen is small
+          */}
           <LeftNav
             docked={false}
-            openRight={true}
+            openRight
             open={this.state.leftNav}
             onRequestChange={leftNav => this.setState({leftNav})}
           >
-
+            {/*
+              Menu items inside of the slide out
+            */}
             <CreateEventBtn closeLeftNav={this.handleToggle} menuItem />
-            <MenuItem onTouchTap={() => {this.handleToggle(); this.goToDash();}} style={{color: '#53b3cb'}}>
+            <MenuItem
+              onTouchTap={() => {this.handleToggle(); this.goToDash();}}
+              style={{color: '#53b3cb'}}
+            >
               Dashboard
             </MenuItem>
-            <LogoutBtn closeLeftNav={() => this.handleToggle()} menuItem={true} logout={this.props.logout} />
-
+            <LogoutBtn
+              closeLeftNav={() => this.handleToggle()}
+              menuItem
+              logout={this.props.logout}
+            />
           </LeftNav>
         </div>
 
       );
     }
 
+    // when the user is not logged in =>
     return (
       <div>
         <div className='navbar-fixed'>
@@ -126,10 +144,8 @@ class NavBar extends Component {
           open={this.state.leftNav}
           onRequestChange={leftNav => this.setState({leftNav})}
         >
-
           <SignupModal closeLeftNav={() => this.setState({leftNav: false})} menuItem={true} />
           <SigninModal closeLeftNav={() => this.setState({leftNav: false})} menuItem={true} />
-
         </LeftNav>
       </div>
     );

@@ -33,7 +33,7 @@ class SignupBtn extends Component {
 
   render() {
     return (
-      <div style={style.mediaQ}>
+      <div>
         <FlatButton
           label="Log In With Facebook"
           style={style.base}

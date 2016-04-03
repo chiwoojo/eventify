@@ -92,7 +92,8 @@ class SignupModal extends React.Component {
         <FlatButton
           label="Sign Up"
           onClick={() => this.handleOpen()}
-          style={{color: '#53b3cb'}} />
+          style={{color: '#53b3cb'}}
+        />
         <Dialog
           title="Eventify"
           modal={false}
