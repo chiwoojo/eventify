@@ -1,11 +1,11 @@
 /**
- *
- *    Reducer Action List & Factories: Main File
- *
+ * Reducer Action List & Functions: Main File
  */
 
+// Axios
 import axios from 'axios';
 
+// List of Actions
 export const UNJOIN_EVENT = 'UNJOIN_EVENT';
 export const SEND_STRIPE_TOKEN = 'SEND_STRIPE_TOKEN';
 export const DELETE_EVENT = 'DELETE_EVENT';
@@ -20,7 +20,6 @@ export const CREATE_ONE_EVENT = 'CREATE_ONE_EVENT';
 export const UPLOAD_IMG = 'UPLOAD_IMG';
 export const SET_DATE = 'SET_DATE';
 export const REJECT_FILE = 'REJECT_FILE';
-// export const SELECT_EVENT = 'SELECT_EVENT';
 export const JOIN_EVENT = 'JOIN_EVENT';
 export const EDIT_EVENT = 'EDIT_EVENT';
 export const UPDATE_LOCATION = 'UPDATE_LOCATION';
@@ -30,16 +29,15 @@ export const UPDATE_RADIUS = 'UPDATE_RADIUS';
 export const REQUEST_CREATE_EVENT = 'REQUEST_CREATE_EVENT';
 
 /**
- *    Fetches all events from the backend
- *
+ *    Unjoins an event
  *    @returns [Object] action that feeds into the reducer function
  */
-
-export function unjoinEvent(data){
-  const request = axios.delete(`api/events/${data.eventId}/${data.userId}`);
+export function unjoinEvent(data) {
+  const request =
+    axios.delete(`api/events/${data.eventId}/${data.userId}`);
   return {
     type: UNJOIN_EVENT,
-    payload: request
+    payload: request,
   };
 }
 
@@ -51,29 +49,43 @@ export function payForEvent(token) {
   };
 }
 
+/**
+ * Deletes an event from the backend
+ * @param id - id of the event
+ * @returns {{action: DELETE_EVENT, payload: (boolean|*)}}
+ */
 export function deleteEvent(id) {
   const request = axios.delete(`api/events/${id}`);
   return {
     type: DELETE_EVENT,
-    payload: request
+    payload: request,
   };
 }
 
+/**
+ * Grabs all available events
+ * from the backend
+ * @returns {{type: FETCH_EVENTS, payload: V}}
+ */
 export function fetchEvents() {
-  const request = axios.get('api/events');
+  const request = axios.get('api/events/');
   return {
     type: FETCH_EVENTS,
-    payload: request
+    payload: request,
   };
 }
 
-export function logout() {
+// export
+
+function logout() {
   const request = axios.get('api/auth/logout');
   return {
     type: LOGOUT,
-    payload: request
+    payload: request,
   };
 }
+
+export { logout };
 
 
 export function auth() {

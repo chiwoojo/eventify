@@ -31,9 +31,9 @@ const MissionBanner = function MissionBanner() {
     <div className="row">
       <div className="about-us-wrapper">
         <div className="hero-aboutus" style={heroStyle.base}>
-          <div className="hero-message"style={heroStyle.msg}>
+          <div className="hero-message" style={heroStyle.msg}>
             <div>
-              <h1 className="hero-header" >We"re on a mission to kick loneliness in the ass!</h1>
+              <h1 className="hero-header"> We"re on a mission to kick loneliness in the ass! </h1>
               <h5 style={heroStyle.sub}>
                 We believe that having fun is a huge part of life, and being lonely sucks.
                 So join up, and create and join some events!

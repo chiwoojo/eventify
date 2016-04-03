@@ -1,63 +1,34 @@
 /**
- *    Form  that goes inside of Create Event Page (index.js)
- *
+ * Form  that goes inside of Create Event Page (index.js)
  */
 
-import React, { Component, PropTypes } from 'react';
-import { createEvent, setEventDate } from '../../redux/actions/';
+// React
+import React, { Component } from 'react';
+
+// Redux
 import { reduxForm } from 'redux-form';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+
+// Components
 import UploadFile from './UploadFile';
 import GoogleMapsSearchBar from '../searchbar/GoogleMapsSearchBar';
 
-//Material UI components
+// Material UI Components
 import DatePicker from 'material-ui/lib/date-picker/date-picker';
 import TimePicker from 'material-ui/lib/time-picker/time-picker';
 import FlatButton from 'material-ui/lib/flat-button';
 
-
-const validate = values => {
-  const errors = {};
-
-  if (!values.eventName) {
-    errors.eventName = 'Required';
-  }
-
-  if (!values.description) {
-    errors.description = 'Required';
-  }
-
-  if (!values.totalPeople) {
-    errors.totalPeople = 'Required';
-  } else if (isNaN(Number(values.totalPeople))) {
-    errors.totalPeople = 'Must be a number';
-  } else if (Number(values.totalPeople) < 0) {
-    errors.totalPeople = 'Cannot be a negative number';
-  }
-
-  if (!values.pricePerPerson) {
-    errors.pricePerPerson = 'Required';
-  } else if (isNaN(Number(values.pricePerPerson))) {
-    errors.pricePerPerson = 'Must be a number';
-  } else if (Number(values.pricePerPerson) < 0) {
-    errors.pricePerPerson = 'Time machine error';
-  }
-
-  return errors;
-};
-
+// Helpers
+import Helpers from '../../helpers/helpers';
 
 class CreateEventForm extends Component {
-
   componentWillMount() {
-
+    // Initializes Redux form
     this.props.initializeForm({
       eventName: '',
       description: '',
       totalPeople: null,
       pricePerPerson: null,
-      date: ''
+      date: '',
     });
   }
 
@@ -65,7 +36,7 @@ class CreateEventForm extends Component {
     this.props.updateEventLocation({
       lat: suggest.location.lat,
       long: suggest.location.lng,
-      address: suggest.label
+      address: suggest.label,
     });
   }
 
@@ -247,17 +218,23 @@ class CreateEventForm extends Component {
 
     );
   }
-
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({setEventDate}, dispatch);
-}
+CreateEventForm =
+  reduxForm({
+    form: 'createEvent',
+    fields:
+    [
+      'eventName',
+      'description',
+      'totalPeople',
+      'pricePerPerson',
+      'date',
+      'lat',
+      'long',
+      'address',
+    ],
+    validate: Helpers.validate,
+  })(CreateEventForm);
 
-CreateEventForm = reduxForm({
-  form: 'createEvent',
-  fields: ['eventName', 'description', 'totalPeople', 'pricePerPerson', 'date', 'lat', 'long', 'address'],
-  validate
-})(CreateEventForm);
-
-export default connect(null, mapDispatchToProps)(CreateEventForm);
+export default CreateEventForm;

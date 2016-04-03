@@ -6,13 +6,18 @@ import axios from 'axios';
 
 const Helpers = {
 
-
   /**
    *    Grabs list of events
    */
   getEvents() {
-    return axios.get('/api/events/').then(function(data) {
-      return data.data; });
+    console.log('getEvents get triggered');
+    return axios.get('/api/events/')
+      .then(function(data) {
+        return data.data;
+      })
+      .catch(function(res) {
+        console.log(res);
+    });
   },
 
   /**
@@ -41,7 +46,7 @@ const Helpers = {
    *      unit = the unit you desire for results                               :::
    *            where: 'M' is statute miles (default)                         :::
    *                    'K' is kilometers                                      :::
-   *                    'N' is nautical miles  
+   *                    'N' is nautical miles
 */
 
   distance(lat1, lon1, lat2, lon2, unit) {
@@ -56,10 +61,38 @@ const Helpers = {
     if (unit=='K') { dist = dist * 1.609344; }
     if (unit=='N') { dist = dist * 0.8684; }
     return dist;
-  }
+  },
+
+  validate(values) {
+    const errors = {};
+
+    if (!values.eventName) {
+      errors.eventName = 'Required';
+    }
+
+    if (!values.description) {
+      errors.description = 'Required';
+    }
+
+    if (!values.totalPeople) {
+      errors.totalPeople = 'Required';
+    } else if (isNaN(Number(values.totalPeople))) {
+      errors.totalPeople = 'Must be a number';
+    } else if (Number(values.totalPeople) < 0) {
+      errors.totalPeople = 'Cannot be a negative number';
+    }
+
+    if (!values.pricePerPerson) {
+      errors.pricePerPerson = 'Required';
+    } else if (isNaN(Number(values.pricePerPerson))) {
+      errors.pricePerPerson = 'Must be a number';
+    } else if (Number(values.pricePerPerson) < 0) {
+      errors.pricePerPerson = 'Time machine error';
+    }
+
+    return errors;
+  },
 
 };
-
-
 
 export default Helpers;

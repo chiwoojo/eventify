@@ -1,10 +1,15 @@
 /**
- *    This is the main file for routing.
- *
- *    It will set up all the routing for this app here.
+ * This is the main file for routing.
+ * It will set up all the routing for this app here.
  */
+
+// React
 import React from 'react';
+
+// React router
 import { Route, IndexRoute } from 'react-router';
+
+// Components
 import App from '../components/App/index';
 import Landing from '../components/landing-page/';
 import Dashboard from '../components/dashboard/';

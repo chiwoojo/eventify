@@ -1,10 +1,7 @@
 /**
- *
- *    The Top(est) Level of our App
- *
- *    Renders the NavBar and Children Components
- *    which are the Dashboard, Create Event page, etc.
- *
+ * The Top(est) Level of our Visible app.
+ * Renders the NavBar and Children Components
+ * which are the Dashboard, Create Event page, etc.
  */
 
 // React

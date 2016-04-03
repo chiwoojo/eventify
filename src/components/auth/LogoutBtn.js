@@ -22,10 +22,12 @@ import React, { Component, PropTypes } from 'react';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 import FlatButton from 'material-ui/lib/flat-button';
 
+// Inline CSS
 const menuItemStyle = {
   color: '#53b3cb',
 };
 
+// Component
 class LogoutBtn extends Component {
   static contextTypes = {
     router: PropTypes.object,
@@ -74,7 +76,7 @@ class LogoutBtn extends Component {
       <FlatButton
         label="Log Out"
         style={menuItemStyle}
-        onClick={this.handleClickFlatBtn}
+        onClick={this.handleLogout}
       />
     );
   }

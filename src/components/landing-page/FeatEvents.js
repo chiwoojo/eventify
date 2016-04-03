@@ -8,16 +8,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchOneEvent } from '../../redux/actions/';
 
-import Card from './../BigCard/EventCard';
+import Card from './../BigCard/index';
 
 import Helpers from '../../helpers/helpers';
 
 class FeatEvents extends React.Component {
 
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   };
-  
+
+  componentDidMount() {
+    console.log('this.props.events is ', this.props.events);
+  }
+
   //fetch one event and save to Redux state when user clicks on a card
   handleClkMoreInfo(event) {
     this.props.fetchOneEvent(event.id)
@@ -25,7 +29,7 @@ class FeatEvents extends React.Component {
   }
 
   render() {
-    
+
     return (
       <div className="row">
         {/*  sorts events by distance from User's location  */}
@@ -47,12 +51,12 @@ class FeatEvents extends React.Component {
         ))}
       </div>
     );
-    
+
   }
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchOneEvent }, dispatch);
-}
+FeatEvents.propTypes = {
+  events: React.PropTypes.array.isRequired,
+};
 
-export default connect(null, mapDispatchToProps)(FeatEvents);
+export default FeatEvents;

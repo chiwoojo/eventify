@@ -3,55 +3,114 @@
  * Contains Navigation Bar, Banner, Search Box, and Featured Events, About the Team page
  * TODO: Refactor by integrating Redux
  */
+
+// React
 import React from 'react';
 
+// Radium
 import Radium from 'radium';
 
-//Import Components
-import EventList from './FeatEvents';
+// Components
+import FeatEvents from './FeatEvents';
 import BannerImage from './BannerImage';
 import GoogleMapsSearchBar from '../searchbar/GoogleMapsSearchBar';
 import AboutUs from '../AboutUs/index';
 
-//Redux Connectors
+// Redux
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { updateUserLocation, fetchCreatedEvents, fetchJoinedEvents, fetchEvents, auth } from '../../redux/actions';
+import {
+  updateUserLocation,
+  fetchEvents,
+  auth,
+  fetchOneEvent,
+} from '../../redux/actions';
 
-
-//Helpers for HTTP requests
+// Helpers
 import Helpers from '../../helpers/helpers';
 
 const style = {
-  backgroundColor: '#fff',
-  paddingBottom: '50px',
-  test: {
-    ':hover': {
-      backgroundColor: 'red'
-    },
-    '@media (min-width: 400px)': {
-      backgroundColor: 'green'
-    },
-  }
-}
+  container: {
+    height: '600px',
+    position: 'relative',
+    boxSizing: 'border-box',
+    fontSize: '14px',
+    lineHeight: '1.43',
+    WebkitFontSmoothing: 'antialiased',
+  },
+  video: {
+    bottom: '0',
+    left: '0',
+    overflow: 'hidden',
+    position: 'absolute',
+    right: '0',
+    top: '0',
+    boxSizing: 'border-box',
+    display: 'block',
+  },
+  content: {
+    height : '550px',
+    paddingBottom : '104px',
+    top: '50px',
+    position: 'relative',
+    zIndex: '2',
+    width: 'auto',
+    paddingLeft: '25px',
+    paddingRight: '25px',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+    textAlign: 'center',
+    boxSizing: 'border-box',
+    display: 'block',
+  },
+  welcome: {
+    width: '100%',
+    height: '100%',
+    display: 'table',
+    position: 'relative',
+    textAlign: 'center',
+  },
+  welcomeSign: {
+    verticalAlign: 'middle',
+    display: 'table-cell',
+  },
+  heroFoot: {
+    bottom: '0',
+    left: '0',
+    paddingBottom: '30px',
+    paddingTop: '30px',
+    position: 'absolute',
+    right: '0',
+    textAlign: 'center',
+  },
+  arrow: {
+    strokeWidth: '3',
+  },
+};
 
 @Radium
 class Landing extends React.Component {
 
-  //Set initial State for this Component
-  constructor(props) {
-    super(props);
-    this.state = {
-      //filteredEvents is used for Search box filtering
-      filteredEvents: [],
-      //when user is logged in
-      isLoggedIn: false,
-      location: {
-        lat: 30,
-        long: -90,
-        address: 'New Orleans, LA'
-      }
-    };
+  // Set initial State for this Component
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     //filteredEvents is used for Search box filtering
+  //     filteredEvents: [],
+  //     //when user is logged in
+  //     isLoggedIn: false,
+  //     location: {
+  //       lat: 30,
+  //       long: -90,
+  //       address: 'New Orleans, LA',
+  //     },
+  //   };
+  // }
+
+  // fetch events right
+  // before component mounts
+  componentWillMount() {
+    this.props.fetchEvents();
   }
 
   /**
@@ -62,181 +121,82 @@ class Landing extends React.Component {
    *    2) Call init()
    *
    */
-  componentDidMount() {
-    this.init();
-  }
+  // componentDidMount() {
+  //   this.init();
+  // }
 
   handleLocationSubmit(suggest) {
     this.setState({ location: {
       lat: suggest.location.lat,
       long: suggest.location.lng,
-      address: suggest.label
+      address: suggest.label,
     }});
   }
 
-  /**
-   *    Get data from backend about events
-   */
-  init() {
-    const that = this;
-    Helpers.getEvents()
-      .then( (data) => {
-        that.setState({
-          events: data.data,
-          filteredEvents: data.data
-        });
-      });
-  }
+  // /**
+  //  *    Get data from backend about events
+  //  */
+  // init() {
+  //   const that = this;
+  //   Helpers.getEvents()
+  //     .then( (data) => {
+  //       console.log('data is ', data);
+  //       that.setState({
+  //         events: data.data,
+  //         filteredEvents: data.data,
+  //       });
+  //     });
+  // }
 
-  /**
-   *
-   *    Sets the 'filteredEvents' state of this Component,
-   *    based on search box input and then re-renders the this page.
-   *
-   *    Currently only searches the title only. Can be easily updated though.
-   *
-   */
-  filterList(e) {
-    let updatedList = this.state.events;
-    updatedList = updatedList.filter(function(event){
-      return event.event_name.toLowerCase().search(
-        e.target.value.toLowerCase()) !== -1;
-    });
-    this.setState({filteredEvents: updatedList});
-    this.render();
-  }
 
-  containerStyle() {
-    return {
-      height : '600px',
-      position: 'relative',
-      boxSizing: 'border-box',
-      fontSize: '14px',
-      lineHeight: '1.43',
-      WebkitFontSmoothing: 'antialiased'
-    };
-  }
-
-  videoContStyle() {
-    return {
-      bottom : '0',
-      left: '0',
-      overflow: 'hidden',
-      position: 'absolute',
-      right: '0',
-      top: '0',
-      boxSizing: 'border-box',
-      display: 'block'
-    };
-  }
-
-  contentContStyle() {
-    return {
-      height : '550px',
-      paddingBottom : '104px',
-      top: '50px',
-      position: 'relative',
-      zIndex: '2',
-      width: 'auto',
-      paddingLeft: '25px',
-      paddingRight: '25px',
-      marginLeft: 'auto',
-      marginRight: 'auto',
-      textAlign: 'center',
-      boxSizing: 'border-box',
-      display: 'block'
-    };
-  }
-
-  welcomeContStyle() {
-    return {
-      width : '100%',
-      height: '100%',
-      display: 'table',
-      position: 'relative',
-      textAlign: 'center'
-    };
-  }
-
-  welcomeSignStyle() {
-    return {
-      verticalAlign : 'middle',
-      display: 'table-cell'
-    };
-  }
-
-  heroFooterStyle() {
-    return {
-      bottom: '0',
-      left: '0',
-      paddingBottom: '30px',
-      paddingTop: '30px',
-      position: 'absolute',
-      right : '0',
-      textAlign: 'center'
-    };
-  }
-
-  arrowStyle() {
-    return {
-      strokeWidth : '3'
-    };
-  }
 
   /**
    *    Renders this Component with children of this Component
    *
    */
   render() {
-
     return (
       <div>
-
         <div className="row">
-
-          <div style={this.containerStyle()} className='hero' >
-
-            <div className='hero__background' style={this.videoContStyle()}>
-
+          <div style={style.container} className="hero" >
+            <div className="hero__background" style={style.video}>
               <BannerImage />
-
             </div>
-
-
-            <div style={this.contentContStyle()} className='hero__content page-container-full'>
-
-              <div style={this.welcomeContStyle()} className='va-container' >
-
-                <div style={this.welcomeSignStyle()} className='va-middle' >
-
-                  <h1 className="hero-header" >YOUR EVENTS, CROWDFUNDED</h1>
-                  <h4 className="hero-header-sub" >Browse upcoming events near you</h4>
-
+            <div style={style.content} className="hero__content page-container-full">
+              <div style={style.welcome} className="va-container" >
+                <div style={style.welcomeSign} className="va-middle" >
+                  <h1 className="hero-header"> YOUR EVENTS, CROWDFUNDED! </h1>
+                  <h4 className="hero-header-sub"> Browse upcoming events near you </h4>
                 </div>
-
               </div>
-
-              <div style={this.heroFooterStyle()} className='hero__content-footer' >
-
+              <div style={style.heroFoot} className="hero__content-footer" >
                 <svg width="70" height="55" viewBox="-2.5 -5 75 60" preserveAspectRatio="none">
-                  <path style={this.arrowStyle()} strokeWidth='6' d="M0,0 l35,50 l35,-50" fill="none" stroke="white" strokeLinecap="round" />
+                  <path
+                    style={style.arrow}
+                    strokeWidth="6"
+                    d="M0,0 l35,50 l35,-50"
+                    fill="none"
+                    stroke="white"
+                    strokeLinecap="round"
+                  />
                 </svg>
-
               </div>
-
             </div>
-
           </div>
-
         </div>
-
-        <GoogleMapsSearchBar initialValue='Search by Location' updateLocation={(d) => this.handleLocationSubmit(d)}/>
-        <div className="container" style={{marginTop: '7%'}}>
-          <EventList events={this.state.filteredEvents} user={this.props.user}  location={this.state.location}/>
+        <GoogleMapsSearchBar
+          initialValue="Search by Location"
+          updateLocation={(d) => this.handleLocationSubmit(d)}
+        />
+        <div className="container" style={{marginTop: "7%"}}>
+          <FeatEvents
+            fetchOneEvent={this.props.fetchOneEvent}
+            events={this.props.events}
+            user={this.props.user}
+            location={this.props.location}
+          />
         </div>
-
         <AboutUs />
-
       </div>
     );
   }
@@ -244,7 +204,12 @@ class Landing extends React.Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({ fetchCreatedEvents, fetchJoinedEvents, fetchEvents, auth, updateUserLocation }, dispatch);
+  return bindActionCreators({
+    fetchEvents,
+    auth,
+    updateUserLocation,
+    fetchOneEvent,
+  }, dispatch);
 }
 
 function mapStateToProps(state) {
@@ -252,12 +217,9 @@ function mapStateToProps(state) {
     events: state.events.all,
     isLoggedIn: state.user.isLoggedIn,
     event: state.events.event,
-    createdEvents: state.events.createdEvents,
-    joinedEvents: state.events.joinedEvents,
-    user: state.user
+    user: state.user,
+    location: state.user.loc,
   };
 }
-
-// Landing = Radium(Landing);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Landing);

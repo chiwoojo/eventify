@@ -10,7 +10,7 @@ import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 
 //Components
 import Slider from 'material-ui/lib/slider';
-import MaterialUICard from '../BigCard/EventCard';
+import MaterialUICard from '../BigCard/index';
 
 import Helpers from '../../helpers/helpers';
 

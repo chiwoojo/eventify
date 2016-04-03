@@ -1,36 +1,37 @@
 /**
- *
  *    Top - Level Nav-Bar Component
- *
  */
 
-//React - Redux
+// React - Redux
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { auth } from '../../redux/actions/index';
+import { auth, logout } from '../../redux/actions/index';
 import { Link } from 'react-router';
 
-//Material UI
+// Material UI
 import SignupModal from '../auth/SignupModal';
 import SigninModal from '../auth/SigninModal';
-import LogoutBtn from '../auth/LogoutBtn';
 import CreateEventBtn from '../create-event/CreateEventBtn';
 import FlatButton from 'material-ui/lib/flat-button';
 import LeftNav from 'material-ui/lib/left-nav';
 import MenuItem from 'material-ui/lib/menus/menu-item';
 
+// Components
+import LogoutBtn from '../auth/LogoutBtn';
+
 class NavBar extends Component {
 
   static contextTypes = {
-    router: PropTypes.object
+    router: PropTypes.object,
   };
 
   constructor(props) {
     super(props);
     this.state = {
-      leftNav: false
+      leftNav: false,
     };
+    this.handleToggle = this.handleToggle.bind(this);
   }
 
   componentWillMount() {
@@ -56,9 +57,9 @@ class NavBar extends Component {
                 <ul id="nav-mobile">
 
                   <div className='right'>
-                  
+
                     <li className='hide-on-med-and-down'>
-                      <CreateEventBtn />
+                      <CreateEventBtn closeLeftNav={this.handleToggle} />
                     </li>
 
                     <li className='hide-on-med-and-down'>
@@ -69,7 +70,7 @@ class NavBar extends Component {
                     </li>
 
                     <li className='hide-on-med-and-down'>
-                      <LogoutBtn />
+                      <LogoutBtn logout={this.props.logout} />
                     </li>
 
                   </div>
@@ -89,11 +90,11 @@ class NavBar extends Component {
             onRequestChange={leftNav => this.setState({leftNav})}
           >
 
-            <CreateEventBtn closeLeftNav={() => this.handleToggle()} menuItem={true} />
+            <CreateEventBtn closeLeftNav={this.handleToggle} menuItem />
             <MenuItem onTouchTap={() => {this.handleToggle(); this.goToDash();}} style={{color: '#53b3cb'}}>
               Dashboard
             </MenuItem>
-            <LogoutBtn closeLeftNav={() => this.handleToggle()} menuItem={true} />
+            <LogoutBtn closeLeftNav={() => this.handleToggle()} menuItem={true} logout={this.props.logout} />
 
           </LeftNav>
         </div>
@@ -137,12 +138,13 @@ class NavBar extends Component {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({auth}, dispatch);
+  return bindActionCreators({ auth, logout }, dispatch);
 }
 
 function mapStateToProps(state) {
   return {
-    isLoggedIn: state.user.isLoggedIn
+    isLoggedIn: state.user.isLoggedIn,
+    logout,
   };
 }
 

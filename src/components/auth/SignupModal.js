@@ -2,15 +2,15 @@
  *
  *    Sign-up Modal
  *
- *    Optional :
+ *    I think this is identical to signinModal...
+ *    maybe we kept it just in case we get do local authentication?
  *
+ *    --Optional--
  *    @props {Boolean} this.props.menuItem
  *    if the sign-up button is part of LeftNav,
  *    return a MenuItem instead of FlatButton.
- *
  *    @props {Function} this.props.closeLeftNav
  *    close the LeftNav, parent component
- *
  */
 
 import React from 'react';
